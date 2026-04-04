@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f0e8;
+  color: #2c2c2c;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  padding: 30px 0 20px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #1a3a5c;
+}
+
+.subtitle {
+  color: #666;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+.categories {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.cat-btn {
+  padding: 8px 16px;
+  border: 2px solid #1a3a5c;
+  border-radius: 20px;
+  background: white;
+  color: #1a3a5c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.cat-btn:hover, .cat-btn.active {
+  background: #1a3a5c;
+  color: white;
+}
+
+.prayer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prayer-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.15s, box-shadow 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prayer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.prayer-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.prayer-name-he {
+  font-size: 1.3rem;
+  font-weight: 600;
+  direction: rtl;
+}
+
+.prayer-name-en {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.prayer-category {
+  background: #e8f0fe;
+  color: #1a3a5c;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Detail view */
+.prayer-detail {
+  padding-bottom: 40px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #1a3a5c;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+
+.detail-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.detail-name-he {
+  font-size: 2.2rem;
+  color: #1a3a5c;
+  direction: rtl;
+}
+
+.detail-name-en {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+.detail-description {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  line-height: 1.6;
+  color: #444;
+}
+
+.audio-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.play-btn {
+  padding: 12px 32px;
+  background: #1a3a5c;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.play-btn:hover {
+  background: #264d73;
+}
+
+.text-section {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.text-section h3 {
+  color: #1a3a5c;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hebrew-text {
+  font-size: 1.4rem;
+  line-height: 2;
+  direction: rtl;
+  text-align: right;
+}
+
+.transliteration {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+}
+
+.translation {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+}
