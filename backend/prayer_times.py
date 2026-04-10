@@ -42,7 +42,7 @@ def fetch_zmanim(city: str, for_date: str | None = None) -> dict:
     else:
         target = date.fromisoformat(for_date)
 
-    location = GeoLocation(city, lat, lng, tz, elevation=0)
+    location = GeoLocation(city, lat, lng, tz_name, elevation=0)
     cal = ZmanimCalendar(geo_location=location, date=target)
 
     sunrise = cal.sunrise()
