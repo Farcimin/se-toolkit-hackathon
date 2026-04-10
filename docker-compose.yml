@@ -16,19 +16,26 @@ services:
       retries: 10
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      network: host
     ports:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://siddur:siddur@db:5432/siddur
     volumes:
       - ./audio:/app/audio
+    dns:
+      - 77.88.8.1
+      - 77.88.8.8
     depends_on:
       db:
         condition: service_healthy
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      network: host
     ports:
       - "3000:80"
     depends_on:
