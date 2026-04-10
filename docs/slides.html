@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Siddur Guide — Hackathon Presentation</title>
+<style>
+  @page {
+    size: 1600px 900px;
+    margin: 0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #2c2c2c;
+  }
+  .slide {
+    width: 1600px;
+    height: 900px;
+    padding: 60px 80px;
+    page-break-after: always;
+    background: linear-gradient(180deg, #f5f0e8 0%, #ede4d3 100%);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  .slide-number {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    font-size: 14px;
+    color: #888;
+  }
+
+  /* Title slide */
+  .title {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .title .symbol { font-size: 120px; margin-bottom: 20px; }
+  .title h1 {
+    font-size: 82px;
+    color: #1a3a5c;
+    margin-bottom: 16px;
+  }
+  .title .tagline {
+    font-size: 26px;
+    color: #555;
+    margin-bottom: 50px;
+    font-style: italic;
+  }
+  .title .author {
+    font-size: 26px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .title .author strong { color: #1a3a5c; }
+
+  /* Section header */
+  h2 {
+    font-size: 54px;
+    color: #1a3a5c;
+    margin-bottom: 30px;
+    border-bottom: 4px solid #1a3a5c;
+    padding-bottom: 12px;
+  }
+
+  /* Context slide */
+  .context-item {
+    margin-bottom: 26px;
+  }
+  .context-label {
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a3a5c;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .context-value {
+    font-size: 26px;
+    line-height: 1.5;
+    color: #333;
+  }
+  .context-value.big {
+    font-size: 32px;
+    font-style: italic;
+    color: #1a3a5c;
+    padding: 20px 28px;
+    background: white;
+    border-radius: 14px;
+    border-left: 6px solid #1a3a5c;
+  }
+
+  /* Implementation slide */
+  .impl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    flex: 1;
+  }
+  .impl-card {
+    background: white;
+    border-radius: 16px;
+    padding: 26px 32px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .impl-card h3 {
+    font-size: 26px;
+    color: #1a3a5c;
+    margin-bottom: 14px;
+  }
+  .impl-card ul {
+    list-style: none;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #333;
+  }
+  .impl-card li::before {
+    content: "▸ ";
+    color: #1a3a5c;
+    font-weight: 700;
+  }
+  .impl-stack {
+    font-size: 16px;
+    color: #888;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* Demo slide */
+  .demo-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: center;
+    flex: 1;
+  }
+  .demo-shot {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    text-align: center;
+  }
+  .demo-shot img {
+    width: 100%;
+    max-height: 540px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  .demo-shot .caption {
+    font-size: 18px;
+    color: #1a3a5c;
+    font-weight: 600;
+    margin-top: 12px;
+  }
+
+  /* Links slide */
+  .links-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    flex: 1;
+    align-items: center;
+  }
+  .link-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .link-card h3 {
+    font-size: 32px;
+    color: #1a3a5c;
+    margin-bottom: 20px;
+  }
+  .link-card img {
+    width: 260px;
+    height: 260px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  .link-card code {
+    display: inline-block;
+    font-size: 16px;
+    color: #444;
+    background: #f5f0e8;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: 'SF Mono', Menlo, monospace;
+    word-break: break-all;
+    max-width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<section class="slide title">
+  <div class="symbol">✡</div>
+  <h1>Siddur Guide</h1>
+  <p class="tagline">Learn Jewish prayers with audio, transliteration, and translation</p>
+  <div class="author">
+    <strong>Arslan Nuriev</strong><br>
+    ar.nuriev@innopolis.university<br>
+    SE Toolkit — Hackathon Lab 9
+  </div>
+  <div class="slide-number">1 / 5</div>
+</section>
+
+<!-- Slide 2: Context -->
+<section class="slide">
+  <h2>Context</h2>
+  <div class="context-item">
+    <div class="context-label">End-user</div>
+    <div class="context-value">Russian-speaking beginners and those interested in Judaism who want to learn how to correctly read and pronounce Hebrew prayers.</div>
+  </div>
+  <div class="context-item">
+    <div class="context-label">Problem</div>
+    <div class="context-value">Hebrew pronunciation is hard for beginners, and there is no simple self-study tool that pairs the original text with Cyrillic transliteration, spoken audio, and the actual prayer times for where the user lives.</div>
+  </div>
+  <div class="context-item">
+    <div class="context-label">Product idea</div>
+    <div class="context-value big">"An audio guide for learning Jewish prayers — Hebrew text, Cyrillic transliteration, Russian translation, pronunciation audio, and daily prayer times."</div>
+  </div>
+  <div class="slide-number">2 / 5</div>
+</section>
+
+<!-- Slide 3: Implementation -->
+<section class="slide">
+  <h2>Implementation</h2>
+  <div class="impl-grid">
+    <div class="impl-card">
+      <h3>Version 1 — Core</h3>
+      <ul>
+        <li>Catalog of 7 core prayers in 3 categories</li>
+        <li>Hebrew text + Cyrillic transliteration + Russian translation</li>
+        <li>Audio pronunciation (Hebrew neural TTS)</li>
+        <li>Category filter, clean mobile-first UI</li>
+        <li>FastAPI + PostgreSQL + React, all dockerized</li>
+      </ul>
+      <div class="impl-stack">Stack: FastAPI · PostgreSQL 16 · React 18 · nginx · Docker Compose</div>
+    </div>
+    <div class="impl-card">
+      <h3>Version 2 — Polish + Deploy</h3>
+      <ul>
+        <li>Daily prayer times (Shacharit, Mincha, Maariv, sunrise, sunset) for 10 cities incl. Innopolis</li>
+        <li>Zmanim computed locally via KosherJava algorithm — fully offline</li>
+        <li>User progress tracking with persistent "learned" state</li>
+        <li>Prayer icons, progress bar, tabbed navigation</li>
+        <li>Deployed to Innopolis University VM</li>
+      </ul>
+      <div class="impl-stack">TA feedback addressed: no specific feedback was given after V1; V2 followed the originally planned roadmap in full.</div>
+    </div>
+  </div>
+  <div class="slide-number">3 / 5</div>
+</section>
+
+<!-- Slide 4: Demo -->
+<section class="slide">
+  <h2>Demo</h2>
+  <div class="demo-body">
+    <div class="demo-shot">
+      <img src="01-prayers-list.png" alt="Prayer list">
+      <div class="caption">Catalog with progress bar &amp; categories</div>
+    </div>
+    <div class="demo-shot">
+      <img src="02-prayer-detail.png" alt="Prayer detail">
+      <div class="caption">Hebrew, transliteration, translation &amp; audio</div>
+    </div>
+    <div class="demo-shot">
+      <img src="03-schedule.png" alt="Schedule">
+      <div class="caption">Daily prayer times by city</div>
+    </div>
+  </div>
+  <div class="slide-number">4 / 5</div>
+</section>
+
+<!-- Slide 5: Links -->
+<section class="slide">
+  <h2>Links</h2>
+  <div class="links-body">
+    <div class="link-card">
+      <h3>GitHub Repository</h3>
+      <img src="qr-github.png" alt="GitHub QR">
+      <code>github.com/Farcimin/se-toolkit-hackathon</code>
+    </div>
+    <div class="link-card">
+      <h3>Live Deployment</h3>
+      <img src="qr-deploy.png" alt="Deploy QR">
+      <code>http://10.93.26.91:3000</code>
+    </div>
+  </div>
+  <div class="slide-number">5 / 5</div>
+</section>
+
+</body>
+</html>

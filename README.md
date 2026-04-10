@@ -4,11 +4,11 @@ An audio guide for learning Jewish prayers — Hebrew text, Cyrillic translitera
 
 ## Demo
 
-> Screenshots will be added after deployment.
->
-> - `docs/screenshot-prayers.png` — prayer catalog with progress bar
-> - `docs/screenshot-detail.png` — prayer detail view with audio player
-> - `docs/screenshot-schedule.png` — daily prayer times for the selected city
+Live deployment: **http://10.93.26.91:3000/** (Innopolis University VM)
+
+| Prayer catalog | Prayer detail | Prayer times |
+|---|---|---|
+| ![Prayer list](docs/01-prayers-list.png) | ![Prayer detail](docs/02-prayer-detail.png) | ![Schedule](docs/03-schedule.png) |
 
 ## Product Context
 
