@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: harbor.pg.innopolis.university/docker-hub-cache/postgres:16-alpine
     environment:
       POSTGRES_USER: siddur
       POSTGRES_PASSWORD: siddur

@@ -20,6 +20,7 @@ def seed():
             translation_ru="Благодарю я Тебя, Царь живой и вечный, за то что Ты вернул мне душу мою по милости Своей. Велика вера в Тебя.",
             description="The first prayer said upon waking up in the morning. It is a short declaration of gratitude to God for restoring the soul after sleep.",
             audio_url="/audio/modeh_ani.mp3",
+            icon="🌅",
             order_index=1,
         ),
         Prayer(
@@ -31,6 +32,7 @@ def seed():
             translation_ru="Слушай, Израиль: Господь — Бог наш, Господь — Един. Благословенно имя славного царства Его во веки веков.",
             description="The most important prayer in Judaism — a declaration of the oneness of God. Recited twice daily, in the morning (Shacharit) and evening (Maariv) services.",
             audio_url="/audio/shema.mp3",
+            icon="📖",
             order_index=2,
         ),
         Prayer(
@@ -42,6 +44,7 @@ def seed():
             translation_ru="Господь, уста мои открой, и рот мой возвестит хвалу Тебе. Благословен Ты, Господь, Бог наш и Бог отцов наших, Бог Авраама, Бог Ицхака и Бог Яакова.",
             description="The central prayer of Jewish liturgy, also called Shmoneh Esrei (Eighteen Blessings). Recited standing, three times daily. This is the opening blessing (Avot).",
             audio_url="/audio/amidah_opening.mp3",
+            icon="🧍",
             order_index=3,
         ),
         Prayer(
@@ -53,6 +56,7 @@ def seed():
             translation_ru="Благословен Ты, Господь, Бог наш, Царь вселенной, выращивающий хлеб из земли.",
             description="A blessing recited before eating bread. It is one of the most commonly used blessings in daily Jewish life.",
             audio_url="/audio/hamotzi.mp3",
+            icon="🍞",
             order_index=4,
         ),
         Prayer(
@@ -64,6 +68,7 @@ def seed():
             translation_ru="Благословен Ты, Господь, Бог наш, Царь вселенной, сотворивший плод виноградной лозы.",
             description="A blessing over wine or grape juice, recited during Kiddush on Shabbat and holidays to sanctify the day.",
             audio_url="/audio/kiddush.mp3",
+            icon="🍷",
             order_index=5,
         ),
         Prayer(
@@ -75,6 +80,7 @@ def seed():
             translation_ru="Выйди, мой друг, навстречу невесте, встретим лик Субботы.",
             description="A liturgical song sung on Friday evening to welcome Shabbat. Composed by Rabbi Shlomo Alkabetz in the 16th century in Safed.",
             audio_url="/audio/lecha_dodi.mp3",
+            icon="🕯️",
             order_index=6,
         ),
         Prayer(
@@ -86,6 +92,7 @@ def seed():
             translation_ru="Благословен Ты, Господь, Бог наш, Царь вселенной, питающий весь мир по благости Своей, по милости и милосердию.",
             description="Grace after meals — a prayer of thanksgiving recited after eating a meal that includes bread. This is the first blessing of the full Birkat Hamazon.",
             audio_url="/audio/birkat_hamazon.mp3",
+            icon="🙏",
             order_index=7,
         ),
     ]

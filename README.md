@@ -1,42 +1,160 @@
 # Siddur Guide
 
-An audio player with texts of core Jewish prayers in Hebrew, Cyrillic transliteration, translation, and audio of correct pronunciation.
+An audio guide for learning Jewish prayers — Hebrew text, Cyrillic transliteration, Russian translation, pronunciation audio, daily prayer times, and progress tracking.
 
----
+## Demo
 
-## Project Idea
+> Screenshots will be added after deployment.
+>
+> - `docs/screenshot-prayers.png` — prayer catalog with progress bar
+> - `docs/screenshot-detail.png` — prayer detail view with audio player
+> - `docs/screenshot-schedule.png` — daily prayer times for the selected city
 
-- **End-user:** Russian-speaking Jews and those interested in Judaism who want to learn how to properly recite Jewish prayers.
-- **Problem:** Beginners struggle to correctly pronounce Hebrew prayers — there is no simple audio guide with transliterated texts in Cyrillic and explanations.
-- **One sentence:** An audio guide for learning Jewish prayers with Hebrew text, Cyrillic transliteration, and correct pronunciation audio.
-- **Core feature:** A catalog of essential prayers with text, transliteration, audio, and brief explanations.
+## Product Context
 
----
+### End users
 
-## Implementation Plan
+Russian-speaking people who are new to Judaism or just starting to practice and want to learn how to correctly read Jewish prayers but struggle with Hebrew pronunciation.
 
-### Version 1 — Prayer Audio Guide
+### Problem
 
-A catalog of essential Jewish prayers (Shema Yisrael, Amidah, blessings) with:
+Beginners struggle to correctly pronounce Hebrew prayers. There is no simple audio guide that pairs the original text with a Cyrillic transliteration, a plain-language explanation, and the actual prayer times for where the user lives.
 
-- Text in Hebrew
-- Transliteration in Cyrillic
-- Audio of correct pronunciation
-- Brief description / explanation of each prayer
+### Solution
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Backend | FastAPI (Python) | REST API for prayers, audio files, search |
-| Database | PostgreSQL | Stores prayers, texts, metadata, categories |
-| Client | Web app (React) | Audio player with texts, prayer navigation |
+A web app that lets a user:
 
-### Version 2 — Enhancements + Deployment
+1. Browse a catalog of core Jewish prayers (Shema, Amidah, blessings, Shabbat liturgy).
+2. See each prayer in three forms side-by-side — Hebrew, Cyrillic transliteration, Russian translation.
+3. Listen to an audio track of the correct pronunciation.
+4. Mark prayers as "learned" and track progress across sessions.
+5. Check today's prayer times (Shacharit, Mincha, Maariv, sunrise, sunset) for a chosen city, powered by [HebCal](https://www.hebcal.com/).
 
-Built on top of Version 1:
+## Features
 
-- **Prayer schedule** — display prayer times (Shacharit, Mincha, Maariv) based on user's city
-- **User progress** — mark prayers as "learned"
-- **Illustrations** — visual guides for prayer positions and actions
-- Address TA feedback from V1 review
-- Dockerize all services
-- Deploy to university VM
+### Implemented (Version 2)
+
+- Prayer catalog with 7 core prayers across 3 categories (Daily, Blessings, Shabbat)
+- Per-prayer view with Hebrew text, Cyrillic transliteration, Russian translation, description
+- Audio playback of correct pronunciation
+- Icons / visual markers for every prayer
+- Category filter (All / Daily / Blessings / Shabbat)
+- User progress tracking (mark as learned, progress bar, persisted per user)
+- Daily prayer times (Zmanim) via HebCal API for 10 cities including Jerusalem, Tel Aviv, Moscow, New York, and Innopolis
+- REST API with health, prayers, progress, zmanim, and categories endpoints
+- Dockerized backend, database, and frontend; single `docker compose up` starts the whole stack
+- PostgreSQL persistence for prayers and user progress
+
+### Not yet implemented
+
+- Recording high-quality audio for every prayer (currently placeholders)
+- Full-text search across prayers
+- Multi-language UI (currently English UI with Russian/Hebrew content)
+- Favorites / bookmarks
+- Push notifications for prayer times
+- Mobile native app (PWA-ready but not installed)
+
+## Usage
+
+After deployment, open the web app in a browser.
+
+1. **Prayers tab** — browse the catalog. Filter by category using the pill buttons. Click a card to open the detail view.
+2. **Prayer detail** — read Hebrew, transliteration, and translation. Tap **▶ Play Audio** to hear the pronunciation. Tap **Mark as learned** to track progress. Use **← Back** to return.
+3. **Times tab** — pick your city from the dropdown. See today's Shacharit, Mincha, Maariv, plus sunrise and sunset. The selection is remembered.
+
+Your progress and city selection are stored server-side tied to a random user id that lives in `localStorage`, so clearing browser storage resets progress for that browser.
+
+## Architecture
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  React SPA   │ ──▶ │   FastAPI    │ ──▶ │  PostgreSQL  │
+│  (nginx:80)  │     │  (uvicorn)   │     │              │
+└──────────────┘     └──────┬───────┘     └──────────────┘
+                            │
+                            ▼
+                     ┌──────────────┐
+                     │  HebCal API  │
+                     │ (zmanim.com) │
+                     └──────────────┘
+```
+
+- **Frontend**: React 18 + Vite, built into static assets served by nginx. Nginx also reverse-proxies `/api/` and `/audio/` to the backend.
+- **Backend**: FastAPI (Python 3.12) with SQLAlchemy ORM and Pydantic schemas. Calls HebCal Zmanim API for prayer times.
+- **Database**: PostgreSQL 16. Tables: `prayers`, `user_progress`. Seeded on first boot.
+
+### API endpoints
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/api/health` | Health check |
+| GET | `/api/prayers` | List prayers (optional `?category=`) |
+| GET | `/api/prayers/{id}` | Get one prayer |
+| GET | `/api/categories` | List categories |
+| GET | `/api/cities` | List supported cities |
+| GET | `/api/zmanim?city=Jerusalem` | Today's prayer times |
+| GET | `/api/progress/{user_id}` | User's learned prayer ids |
+| POST | `/api/progress` | Mark a prayer as learned |
+| DELETE | `/api/progress?user_id=&prayer_id=` | Unmark |
+
+## Deployment
+
+### Target environment
+
+- **OS**: Ubuntu 24.04 LTS (as on Innopolis University VMs)
+- **CPU / RAM**: 1 vCPU / 1 GB RAM is enough
+- **Ports**: 3000 (frontend), 8000 (backend), 5432 (Postgres, optional external)
+
+### Prerequisites on the VM
+
+Install Docker Engine and Docker Compose:
+
+```bash
+sudo apt update
+sudo apt install -y docker.io docker-compose-plugin git
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER  # re-login after this
+```
+
+### Step-by-step deployment
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/Farcimin/se-toolkit-hackathon.git
+cd se-toolkit-hackathon
+
+# 2. Build and start all services
+docker compose up --build -d
+
+# 3. Verify
+curl http://localhost:8000/api/health
+# {"status":"ok","version":"2.0"}
+
+# 4. Open the app
+# http://<your-vm-ip>:3000
+```
+
+The first boot will:
+
+1. Pull/build Postgres, backend, and frontend images.
+2. Wait for Postgres healthcheck to pass.
+3. Start the backend, which creates tables and seeds the prayer catalog.
+4. Start the frontend (nginx) which proxies API calls to the backend.
+
+### Stopping / updating
+
+```bash
+docker compose down            # stop
+docker compose down -v         # stop and wipe DB volume
+git pull && docker compose up --build -d  # pull latest and restart
+```
+
+### Notes
+
+- The Docker images pull base images from `harbor.pg.innopolis.university/docker-hub-cache/`. If deploying outside the university network, replace these prefixes with plain `python:3.12-slim`, `node:20-alpine`, `nginx:alpine`, and `postgres:16-alpine` in the three Dockerfiles and `docker-compose.yml`.
+- Audio files live in `./audio` and are mounted into the backend container. Replace the placeholder `.mp3` files with real recordings without rebuilding.
+- Prayer times are fetched live from HebCal; the VM needs outbound HTTPS to `www.hebcal.com`.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
