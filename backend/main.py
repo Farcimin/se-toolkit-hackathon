@@ -91,11 +91,11 @@ def unmark_learned(user_id: str, prayer_id: int, db: Session = Depends(get_db)):
 # --- V2: Prayer times (Zmanim) ---
 
 @app.get("/api/zmanim", response_model=ZmanimOut)
-async def get_zmanim(city: str = "Jerusalem", date: str | None = None):
+def get_zmanim(city: str = "Jerusalem", date: str | None = None):
     try:
-        data = await fetch_zmanim(city, date)
+        data = fetch_zmanim(city, date)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"HebCal error: {e}")
+        raise HTTPException(status_code=500, detail=f"Zmanim error: {e}")
     return data
 
 

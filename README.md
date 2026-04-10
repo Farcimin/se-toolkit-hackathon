@@ -28,7 +28,7 @@ A web app that lets a user:
 2. See each prayer in three forms side-by-side — Hebrew, Cyrillic transliteration, Russian translation.
 3. Listen to an audio track of the correct pronunciation.
 4. Mark prayers as "learned" and track progress across sessions.
-5. Check today's prayer times (Shacharit, Mincha, Maariv, sunrise, sunset) for a chosen city, powered by [HebCal](https://www.hebcal.com/).
+5. Check today's prayer times (Shacharit, Mincha, Maariv, sunrise, sunset) for a chosen city, computed locally from latitude/longitude using the KosherJava zmanim algorithm — no external API needed.
 
 ## Features
 
@@ -40,7 +40,7 @@ A web app that lets a user:
 - Icons / visual markers for every prayer
 - Category filter (All / Daily / Blessings / Shabbat)
 - User progress tracking (mark as learned, progress bar, persisted per user)
-- Daily prayer times (Zmanim) via HebCal API for 10 cities including Jerusalem, Tel Aviv, Moscow, New York, and Innopolis
+- Daily prayer times (Zmanim) computed locally via the KosherJava zmanim algorithm for 10 cities including Jerusalem, Tel Aviv, Moscow, New York, and Innopolis — fully offline, no external API
 - REST API with health, prayers, progress, zmanim, and categories endpoints
 - Dockerized backend, database, and frontend; single `docker compose up` starts the whole stack
 - PostgreSQL persistence for prayers and user progress
@@ -80,7 +80,7 @@ Your progress and city selection are stored server-side tied to a random user id
 ```
 
 - **Frontend**: React 18 + Vite, built into static assets served by nginx. Nginx also reverse-proxies `/api/` and `/audio/` to the backend.
-- **Backend**: FastAPI (Python 3.12) with SQLAlchemy ORM and Pydantic schemas. Calls HebCal Zmanim API for prayer times.
+- **Backend**: FastAPI (Python 3.12) with SQLAlchemy ORM and Pydantic schemas. Uses the `zmanim` Python library (port of KosherJava) to compute prayer times locally.
 - **Database**: PostgreSQL 16. Tables: `prayers`, `user_progress`. Seeded on first boot.
 
 ### API endpoints
@@ -154,7 +154,7 @@ git pull && docker compose up --build -d  # pull latest and restart
 
 - The Docker images pull base images from `harbor.pg.innopolis.university/docker-hub-cache/`. If deploying outside the university network, replace these prefixes with plain `python:3.12-slim`, `node:20-alpine`, `nginx:alpine`, and `postgres:16-alpine` in the three Dockerfiles and `docker-compose.yml`.
 - Audio files live in `./audio` and are mounted into the backend container. Replace the placeholder `.mp3` files with real recordings without rebuilding.
-- Prayer times are fetched live from HebCal; the VM needs outbound HTTPS to `www.hebcal.com`.
+- Prayer times are computed locally — no external network is required at runtime beyond what Docker already needs for image pulls.
 
 ## License
 

@@ -82,7 +82,7 @@ export default function Schedule() {
       )}
 
       <p className="schedule-footer">
-        Times provided by <a href="https://www.hebcal.com/" target="_blank" rel="noreferrer">HebCal</a>
+        Times computed locally using the KosherJava zmanim algorithm
       </p>
     </div>
   )
