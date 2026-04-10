@@ -8,7 +8,7 @@ from database import get_db, engine, Base
 from models import Prayer, UserProgress
 from schemas import PrayerOut, ProgressIn, ZmanimOut
 from seed import seed
-from zmanim import fetch_zmanim, list_cities
+from prayer_times import fetch_zmanim, list_cities
 
 Base.metadata.create_all(bind=engine)
 
