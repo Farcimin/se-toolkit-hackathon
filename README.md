@@ -121,6 +121,7 @@ sudo usermod -aG docker $USER  # re-login after this
 ```bash
 # 1. Clone the repo
 git clone https://github.com/Farcimin/se-toolkit-hackathon.git
+# (old URL https://github.com/Farcimin/PrayPrayPray still works as GitHub auto-redirects)
 cd se-toolkit-hackathon
 
 # 2. Build and start all services
